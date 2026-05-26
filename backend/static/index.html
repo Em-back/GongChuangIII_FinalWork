@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>openEuler 智能工具箱</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        body { padding-top: 60px; }
+        .module-page { display: none; }
+        .module-page.active { display: block; }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">🔧 智能工具箱</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav" id="nav-tabs">
+                    <li class="nav-item"><a class="nav-link active" href="#" data-page="dashboard">📊 仪表盘</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-page="files">📁 文件管理</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-page="ai">🤖 AI 助手</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-page="music">🎵 音乐</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-page="urlfilter">🛡️ 网址过滤</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-page="alarm">🔔 告警</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区：各模块页面 -->
+    <div class="container mt-4">
+        <!-- 仪表盘页面 -->
+        <div id="page-dashboard" class="module-page active">
+            <h2>系统实时监控</h2>
+            <div class="row">
+                <div class="col-md-6"><canvas id="cpuChart"></canvas></div>
+                <div class="col-md-6"><canvas id="memChart"></canvas></div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-4">💾 磁盘: <span id="diskValue">--</span>%</div>
+                <div class="col-md-4">📤 网络发送: <span id="netSent">--</span> KB/s</div>
+                <div class="col-md-4">📥 网络接收: <span id="netRecv">--</span> KB/s</div>
+            </div>
+        </div>
+
+        <!-- 其他模块占位（后续填充） -->
+        <div id="page-files" class="module-page"><h2>文件管理</h2><p>待实现...</p></div>
+        <div id="page-ai" class="module-page"><h2>AI 助手</h2><p>待实现...</p></div>
+        <div id="page-music" class="module-page"><h2>音乐控制</h2><p>待实现...</p></div>
+        <div id="page-urlfilter" class="module-page"><h2>网址安全检测</h2><p>待实现...</p></div>
+        <div id="page-alarm" class="module-page"><h2>告警记录</h2><p>待实现...</p></div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // 导航切换逻辑
+        document.querySelectorAll('#nav-tabs a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                // 切换 active 样式
+                document.querySelectorAll('#nav-tabs a').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                // 切换页面显示
+                const pageName = this.dataset.page;
+                document.querySelectorAll('.module-page').forEach(p => p.classList.remove('active'));
+                document.getElementById('page-' + pageName).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
