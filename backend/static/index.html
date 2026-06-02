@@ -77,5 +77,23 @@
             });
         });
     </script>
+    <!-- 音乐控制脚本 -->
+    <script src="audio.js"></script>
+    <script>
+        // 切换到音乐模块时自动播放BGM
+        const musicPage = document.getElementById('page-music');
+        const navLink = document.querySelector('a[data-page="music"]');
+
+        navLink.addEventListener('click', () => {
+            audioManager.playBGM();
+        });
+
+        // 示例：点击按钮播放音效
+        const musicBtn = document.createElement('button');
+        musicBtn.innerText = "播放点击音效";
+        musicBtn.classList.add('btn', 'btn-primary', 'mt-3');
+        musicBtn.onclick = () => audioManager.playSound('click');
+        musicPage.appendChild(musicBtn);
+    </script>
 </body>
 </html>
