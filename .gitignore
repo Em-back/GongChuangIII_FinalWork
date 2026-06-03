@@ -1,3 +1,41 @@
+# Python
 __pycache__/
-backend/__pycache__/
-backend/routers/__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+.venv/
+
+# Distribution
+build/
+dist/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# pytest
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+
+# coverage
+.coverage
+htmlcov/
+
+# Docker
+.dockerignore
+
+# Temporary files
+tmp/
+temp/
