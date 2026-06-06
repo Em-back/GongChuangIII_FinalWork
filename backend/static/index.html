@@ -40,14 +40,28 @@
         <!-- 仪表盘页面 -->
         <div id="page-dashboard" class="module-page active">
             <h2>系统实时监控</h2>
-            <div class="row">
-                <div class="col-md-6"><canvas id="cpuChart"></canvas></div>
-                <div class="col-md-6"><canvas id="memChart"></canvas></div>
-            </div>
             <div class="row mt-3">
+                <div class="col-md-4">CPU 核心数: <span id="cpuCores">--</span></div>
                 <div class="col-md-4">💾 磁盘: <span id="diskValue">--</span>%</div>
                 <div class="col-md-4">📤 网络发送: <span id="netSent">--</span> KB/s</div>
                 <div class="col-md-4">📥 网络接收: <span id="netRecv">--</span> KB/s</div>
+                <div class="col-md-4">运行时间: <span id="uptimeValue">--</span></div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="card p-3">
+                        <h5>CPU 使用率</h5>
+                        <canvas id="cpuChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card p-3">
+                        <h5>内存使用率</h5>
+                        <canvas id="memChart"></canvas>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -128,23 +142,11 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script>
-        // 导航切换逻辑
-        document.querySelectorAll('#nav-tabs a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                // 切换 active 样式
-                document.querySelectorAll('#nav-tabs a').forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-                // 切换页面显示
-                const pageName = this.dataset.page;
-                document.querySelectorAll('.module-page').forEach(p => p.classList.remove('active'));
-                document.getElementById('page-' + pageName).classList.add('active');
-            });
-        });
-    </script>
+    <!-- 界面导航脚本 -->
+    <script src="js/navigation.js"></script>
+    <!-- 仪表盘脚本 -->
+    <script src="js/system.js"></script>
     <!-- 音乐控制脚本 -->
-    <script src="audio.js"></script>
+    <script src="js/music.js"></script>
 </body>
 </html>
