@@ -54,7 +54,74 @@
         <!-- 其他模块占位（后续填充） -->
         <div id="page-files" class="module-page"><h2>文件管理</h2><p>待实现...</p></div>
         <div id="page-ai" class="module-page"><h2>AI 助手</h2><p>待实现...</p></div>
-        <div id="page-music" class="module-page"><h2>音乐控制</h2><p>待实现...</p></div>
+        <div id="page-music" class="module-page">
+
+        <h2>音乐播放器</h2>
+
+        <div class="card p-3">
+
+            <h5 id="currentMusic">
+                未选择音乐
+            </h5>
+
+            <audio id="audioPlayer"></audio>
+
+            <input
+                id="progressBar"
+                type="range"
+                min="0"
+                max="100"
+                value="0"
+                class="form-range">
+
+            <div class="btn-group mb-3">
+
+                <button
+                    class="btn btn-primary"
+                    onclick="togglePlay()">
+                    播放/暂停
+                </button>
+
+            </div>
+
+            <label class="form-label">
+                音量：
+                <span id="volumeText">50%</span>
+            </label>
+
+            <input
+                id="volumeBar"
+                type="range"
+                min="0"
+                max="100"
+                value="50"
+                class="form-range">
+
+        </div>
+
+        <hr>
+
+        <div class="mb-3">
+
+            <input
+                type="file"
+                id="musicUpload"
+                accept=".mp3,.wav,.ogg">
+
+            <button
+                class="btn btn-success"
+                onclick="uploadMusic()">
+                添加音乐
+            </button>
+
+        </div>
+
+        <ul
+            id="musicList"
+            class="list-group">
+        </ul>
+
+        </div>
         <div id="page-urlfilter" class="module-page"><h2>网址安全检测</h2><p>待实现...</p></div>
         <div id="page-alarm" class="module-page"><h2>告警记录</h2><p>待实现...</p></div>
     </div>
@@ -79,21 +146,5 @@
     </script>
     <!-- 音乐控制脚本 -->
     <script src="audio.js"></script>
-    <script>
-        // 切换到音乐模块时自动播放BGM
-        const musicPage = document.getElementById('page-music');
-        const navLink = document.querySelector('a[data-page="music"]');
-
-        navLink.addEventListener('click', () => {
-            audioManager.playBGM();
-        });
-
-        // 示例：点击按钮播放音效
-        const musicBtn = document.createElement('button');
-        musicBtn.innerText = "播放点击音效";
-        musicBtn.classList.add('btn', 'btn-primary', 'mt-3');
-        musicBtn.onclick = () => audioManager.playSound('click');
-        musicPage.appendChild(musicBtn);
-    </script>
 </body>
 </html>

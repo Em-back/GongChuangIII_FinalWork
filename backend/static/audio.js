@@ -1,45 +1,277 @@
 // backend/static/audio.js
-class AudioManager {
-    constructor() {
-        this.bgm = new Audio('/music/bgm.mp3');
-        this.bgm.loop = true;
-        this.bgm.volume = 0.5; // 默认50%音量
 
-        this.sounds = {}; // 音效字典
+let player;
+
+// 等页面加载完成后初始化
+document.addEventListener("DOMContentLoaded", () => {
+
+    player = document.getElementById("audioPlayer");
+
+    if (!player) {
+        console.error("未找到 audioPlayer");
+        return;
     }
 
-    // 背景音乐
-    playBGM() {
-        this.bgm.play().catch(err => console.log("BGM播放错误:", err));
+    // 更新进度条
+    player.addEventListener("timeupdate", () => {
+
+        const progressBar =
+            document.getElementById("progressBar");
+
+        if (!progressBar) return;
+
+        const progress =
+            player.duration
+                ? player.currentTime /
+                player.duration * 100
+                : 0;
+
+        progressBar.value = progress;
+    });
+
+    // 拖动进度条
+    const progressBar =
+        document.getElementById("progressBar");
+
+    if (progressBar) {
+
+        progressBar.addEventListener(
+            "input",
+            (e) => {
+
+                if (!player.duration) return;
+
+                player.currentTime =
+                    player.duration *
+                    e.target.value / 100;
+            }
+        );
     }
 
-    pauseBGM() {
-        this.bgm.pause();
+    // 音量控制条
+    const volumeBar =
+        document.getElementById("volumeBar");
+
+    if (volumeBar) {
+
+        player.volume = 0.5;
+
+        volumeBar.addEventListener(
+            "input",
+            (e) => {
+
+                const volume =
+                    e.target.value / 100;
+
+                player.volume = volume;
+
+                document.getElementById(
+                    "volumeText"
+                ).innerText =
+                    e.target.value + "%";
+            }
+        );
     }
 
-    setBGMVolume(vol) {
-        this.bgm.volume = vol; // 0~1
+    // 加载音乐列表
+    loadMusicList();
+
+});
+
+// 加载音乐列表
+async function loadMusicList() {
+
+    try {
+
+        const res =
+            await fetch("/api/music/list");
+
+        const data =
+            await res.json();
+
+        const ul =
+            document.getElementById(
+                "musicList"
+            );
+
+        if (!ul) return;
+
+        ul.innerHTML = "";
+
+        data.music.forEach(name => {
+
+            const li =
+                document.createElement("li");
+
+            li.className =
+                "list-group-item list-group-item-action";
+
+            li.innerText = name;
+
+            li.onclick = () => {
+
+                player.src =
+                    "/music/" + name;
+
+                document.getElementById(
+                    "currentMusic"
+                ).innerText = name;
+
+                player.play()
+                    .catch(err =>
+                        console.error(
+                            "播放失败:",
+                            err
+                        )
+                    );
+            };
+
+            ul.appendChild(li);
+        });
+
+    } catch (err) {
+
+        console.error(
+            "加载音乐列表失败:",
+            err
+        );
     }
 
-    // 音效管理
-    loadSound(name, path) {
-        const audio = new Audio(path);
-        this.sounds[name] = audio;
-    }
-
-    playSound(name) {
-        if (this.sounds[name]) {
-            this.sounds[name].currentTime = 0;
-            this.sounds[name].play().catch(err => console.log("音效播放错误:", err));
-        }
-    }
 }
 
-// 创建全局对象
-window.audioManager = new AudioManager();
+// 播放 / 暂停
+function togglePlay() {
 
-// 页面交互示例
-document.addEventListener('click', () => {
-    audioManager.playBGM();
-    audioManager.loadSound('click', '/music/click.mp3');
-});
+    if (!player) return;
+
+    if (player.paused) {
+
+        player.play()
+            .catch(err =>
+                console.error(
+                    "播放失败:",
+                    err
+                )
+            );
+
+    } else {
+
+        player.pause();
+    }
+
+}
+
+// 音量增加
+function volumeUp() {
+
+    if (!player) return;
+
+    player.volume =
+        Math.min(
+            1,
+            player.volume + 0.1
+        );
+
+    const value =
+        Math.round(
+            player.volume * 100
+        );
+
+    document.getElementById(
+        "volumeBar"
+    ).value = value;
+
+    document.getElementById(
+        "volumeText"
+    ).innerText =
+        value + "%";
+}
+
+// 音量减少
+function volumeDown() {
+
+    if (!player) return;
+
+    player.volume =
+        Math.max(
+            0,
+            player.volume - 0.1
+        );
+
+    const value =
+        Math.round(
+            player.volume * 100
+        );
+
+    document.getElementById(
+        "volumeBar"
+    ).value = value;
+
+    document.getElementById(
+        "volumeText"
+    ).innerText =
+        value + "%";
+}
+
+// 上传音乐
+async function uploadMusic() {
+
+    const fileInput =
+        document.getElementById(
+            "musicUpload"
+        );
+
+    if (
+        !fileInput ||
+        fileInput.files.length === 0
+    ) {
+        alert("请选择音乐文件");
+        return;
+    }
+
+    const formData =
+        new FormData();
+
+    formData.append(
+        "file",
+        fileInput.files[0]
+    );
+
+    try {
+
+        const res =
+            await fetch(
+                "/api/music/upload",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+        const data =
+            await res.json();
+
+        if (data.success) {
+
+            alert("上传成功");
+
+            fileInput.value = "";
+
+            await loadMusicList();
+
+        } else {
+
+            alert("上传失败");
+        }
+
+    } catch (err) {
+
+        console.error(
+            "上传失败:",
+            err
+        );
+
+        alert("上传失败");
+    }
+
+}

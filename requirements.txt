@@ -2,3 +2,4 @@ fastapi
 uvicorn[standard]
 psutil
 websockets
+python-multipart
