@@ -41,11 +41,11 @@
         <div id="page-dashboard" class="module-page active">
             <h2>系统实时监控</h2>
             <div class="row mt-3">
-                <div class="col-md-4">CPU 核心数: <span id="cpuCores">--</span></div>
+                <div class="col-md-4">💻 CPU 核心数: <span id="cpuCores">--</span></div>
                 <div class="col-md-4">💾 磁盘: <span id="diskValue">--</span>%</div>
                 <div class="col-md-4">📤 网络发送: <span id="netSent">--</span> KB/s</div>
                 <div class="col-md-4">📥 网络接收: <span id="netRecv">--</span> KB/s</div>
-                <div class="col-md-4">运行时间: <span id="uptimeValue">--</span></div>
+                <div class="col-md-4">⌚ 运行时间: <span id="uptimeValue">--</span></div>
             </div>
             <div class="row mt-3">
                 <div class="col-md-6">
@@ -65,78 +65,96 @@
             </div>
         </div>
 
-        <!-- 其他模块占位（后续填充） -->
-        <div id="page-files" class="module-page"><h2>文件管理</h2><p>待实现...</p></div>
-        <div id="page-ai" class="module-page"><h2>AI 助手</h2><p>待实现...</p></div>
-        <div id="page-music" class="module-page">
-
-        <h2>音乐播放器</h2>
-
-        <div class="card p-3">
-
-            <h5 id="currentMusic">
-                未选择音乐
-            </h5>
-
-            <audio id="audioPlayer"></audio>
-
-            <input
-                id="progressBar"
-                type="range"
-                min="0"
-                max="100"
-                value="0"
-                class="form-range">
-
-            <div class="btn-group mb-3">
-
-                <button
-                    class="btn btn-primary"
-                    onclick="togglePlay()">
-                    播放/暂停
-                </button>
-
+        <!-- 文件管理页面 -->
+        <div id="page-files" class="module-page">
+            <h2>文件管理器</h2>
+            <div class="mb-3">
+                <input type="file" id="fileUploadInput">
+                <button class="btn btn-success" onclick="uploadFile()">上传</button>
             </div>
-
-            <label class="form-label">
-                音量：
-                <span id="volumeText">50%</span>
-            </label>
-
-            <input
-                id="volumeBar"
-                type="range"
-                min="0"
-                max="100"
-                value="50"
-                class="form-range">
-
-        </div>
-
-        <hr>
-
-        <div class="mb-3">
-
-            <input
-                type="file"
-                id="musicUpload"
-                accept=".mp3,.wav,.ogg">
-
             <button
-                class="btn btn-success"
-                onclick="uploadMusic()">
-                添加音乐
+                class="btn btn-primary"
+                onclick="createFile()">
+                新建文件
             </button>
-
+            <button
+                class="btn btn-secondary"
+                onclick="createFolder()">
+                新建文件夹
+            </button>
+            <div>
+                当前目录：<span id="currentPath">/</span>
+                <button class="btn btn-secondary btn-sm" onclick="goUp()">上级目录</button>
+            </div>
+            <table class="table table-bordered mt-2">
+                <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>类型</th>
+                        <th>大小 (字节)</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="fileTableBody"></tbody>
+            </table>
         </div>
 
-        <ul
-            id="musicList"
-            class="list-group">
-        </ul>
-
+        <div id="page-ai" class="module-page"><h2>AI 助手</h2><p>待实现...</p></div>
+        
+        <!-- 音乐播放器页面 -->
+        <div id="page-music" class="module-page">
+            <h2>音乐播放器</h2>
+            <div class="card p-3">
+                <h5 id="currentMusic">
+                    未选择音乐
+                </h5>
+                <audio id="audioPlayer"></audio>
+                <input
+                    id="progressBar"
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="0"
+                    class="form-range">
+                <div class="btn-group mb-3">
+                    <button
+                        class="btn btn-primary"
+                        onclick="togglePlay()">
+                        播放/暂停
+                    </button>
+                </div>
+                <label class="form-label">
+                    音量：
+                    <span id="volumeText">50%</span>
+                </label>
+                <input
+                    id="volumeBar"
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="50"
+                    class="form-range">
+            </div>
+            <hr>
+            <div class="mb-3">
+                <input
+                    type="file"
+                    id="musicUpload"
+                    accept=".mp3,.wav,.ogg">
+                <button
+                    class="btn btn-success"
+                    onclick="uploadMusic()">
+                    添加音乐
+                </button>
+            </div>
+            <ul
+                id="musicList"
+                class="list-group">
+            </ul>
         </div>
+
         <div id="page-urlfilter" class="module-page"><h2>网址安全检测</h2><p>待实现...</p></div>
+        
         <div id="page-alarm" class="module-page"><h2>告警记录</h2><p>待实现...</p></div>
     </div>
 
@@ -146,6 +164,8 @@
     <script src="js/navigation.js"></script>
     <!-- 仪表盘脚本 -->
     <script src="js/system.js"></script>
+    <!-- 文件管理脚本 -->
+    <script src="js/files.js"></script>
     <!-- 音乐控制脚本 -->
     <script src="js/music.js"></script>
 </body>
