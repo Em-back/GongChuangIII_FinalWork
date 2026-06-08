@@ -1,0 +1,16 @@
+[
+  {
+    "time": "2026-06-09 03:53:14",
+    "url": "https://www.baidu.com/?tn=25017023_17_dg",
+    "is_malicious": false,
+    "source": "cloud",
+    "detail": "合法搜索引擎，安全"
+  },
+  {
+    "time": "2026-06-09 03:54:16",
+    "url": "https://malicious.example.com/phishing",
+    "is_malicious": true,
+    "source": "local",
+    "detail": "匹配黑名单URL: https://malicious.example.com/phishing"
+  }
+]

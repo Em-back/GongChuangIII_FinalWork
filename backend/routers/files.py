@@ -74,6 +74,7 @@ def list_files(path: str = ""):
         )
 
     return {
+        "base_dir": str(BASE_DIR.resolve()),
         "path": path,
         "items": items
     }

@@ -1,0 +1,15 @@
+{
+  "urls": [
+    "https://malicious.example.com/phishing",
+    "http://evil.net/badpage"
+  ],
+  "domains": [
+    "phishingsite.com",
+    "malwarehost.net"
+  ],
+  "keywords": [
+    "free-money",
+    "win-prize",
+    "account-verify"
+  ]
+}

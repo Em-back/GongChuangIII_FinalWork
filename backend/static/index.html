@@ -54,14 +54,12 @@
                         <canvas id="cpuChart"></canvas>
                     </div>
                 </div>
-
                 <div class="col-md-6">
                     <div class="card p-3">
                         <h5>内存使用率</h5>
                         <canvas id="memChart"></canvas>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -72,17 +70,11 @@
                 <input type="file" id="fileUploadInput">
                 <button class="btn btn-success" onclick="uploadFile()">上传</button>
             </div>
-            <button
-                class="btn btn-primary"
-                onclick="createFile()">
-                新建文件
-            </button>
-            <button
-                class="btn btn-secondary"
-                onclick="createFolder()">
-                新建文件夹
-            </button>
             <div>
+                <button class="btn btn-primary" onclick="createFile()">新建文件</button>
+                <button class="btn btn-secondary" onclick="createFolder()">新建文件夹</button>
+            </div>
+            <div class="mt-2">
                 当前目录：<span id="currentPath">/</span>
                 <button class="btn btn-secondary btn-sm" onclick="goUp()">上级目录</button>
             </div>
@@ -99,74 +91,93 @@
             </table>
         </div>
 
-        <div id="page-ai" class="module-page"><h2>AI 助手</h2><p>待实现...</p></div>
-        
+        <!-- AI 助手页面 -->
+        <div id="page-ai" class="module-page">
+            <h2>🤖 AI 助手 (DeepSeek)</h2>
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <label class="form-label me-2 mb-0">人设：</label>
+                        <select id="persona-select" class="form-select d-inline-block w-auto" onchange="switchPersona()">
+                            <option value="assistant">默认助手</option>
+                            <option value="winefox">酒狐</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label me-2 mb-0">模型：</label>
+                        <select id="model-select" class="form-select d-inline-block w-auto" onchange="switchModel()">
+                            <option value="deepseek-chat">DeepSeek-Chat</option>
+                            <option value="deepseek-reasoner">DeepSeek-Reasoner</option>
+                            <option value="deepseek-pro">DeepSeek-Pro</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body" style="height: 400px; overflow-y: auto;" id="chatMessages">
+                    <div class="alert alert-secondary">👋 你好！我是 DeepSeek 智能助手，请问有什么可以帮您？</div>
+                </div>
+                <div class="card-footer">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="chatInput" placeholder="输入消息...">
+                        <button class="btn btn-primary" id="sendBtn">发送</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- 音乐播放器页面 -->
         <div id="page-music" class="module-page">
             <h2>音乐播放器</h2>
             <div class="card p-3">
-                <h5 id="currentMusic">
-                    未选择音乐
-                </h5>
+                <h5 id="currentMusic">未选择音乐</h5>
                 <audio id="audioPlayer"></audio>
-                <input
-                    id="progressBar"
-                    type="range"
-                    min="0"
-                    max="100"
-                    value="0"
-                    class="form-range">
+                <input id="progressBar" type="range" min="0" max="100" value="0" class="form-range">
                 <div class="btn-group mb-3">
-                    <button
-                        class="btn btn-primary"
-                        onclick="togglePlay()">
-                        播放/暂停
-                    </button>
+                    <button class="btn btn-primary" onclick="togglePlay()">播放/暂停</button>
                 </div>
-                <label class="form-label">
-                    音量：
-                    <span id="volumeText">50%</span>
-                </label>
-                <input
-                    id="volumeBar"
-                    type="range"
-                    min="0"
-                    max="100"
-                    value="50"
-                    class="form-range">
+                <label class="form-label">音量： <span id="volumeText">50%</span></label>
+                <input id="volumeBar" type="range" min="0" max="100" value="50" class="form-range">
             </div>
             <hr>
             <div class="mb-3">
-                <input
-                    type="file"
-                    id="musicUpload"
-                    accept=".mp3,.wav,.ogg">
-                <button
-                    class="btn btn-success"
-                    onclick="uploadMusic()">
-                    添加音乐
-                </button>
+                <input type="file" id="musicUpload" accept=".mp3,.wav,.ogg">
+                <button class="btn btn-success" onclick="uploadMusic()">添加音乐</button>
             </div>
-            <ul
-                id="musicList"
-                class="list-group">
-            </ul>
+            <ul id="musicList" class="list-group"></ul>
         </div>
 
-        <div id="page-urlfilter" class="module-page"><h2>网址安全检测</h2><p>待实现...</p></div>
-        
-        <div id="page-alarm" class="module-page"><h2>告警记录</h2><p>待实现...</p></div>
+        <!-- 网址过滤页面 -->
+        <div id="page-urlfilter" class="module-page">
+            <h2>🛡️ 网址安全检测（AI 分析）</h2>
+            <div class="card">
+                <div class="card-body">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="urlInput" placeholder="请输入要检测的网址，例如 https://example.com">
+                        <button class="btn btn-primary" id="checkUrlBtn">检测</button>
+                    </div>
+                    <div id="urlResult" class="alert alert-secondary" style="display: none;"></div>
+		    <hr>
+		    <h5>最近检测记录</h5>
+		    <div id="urlLogContainer"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 告警页面（占位） -->
+        <div id="page-alarm" class="module-page">
+            <h2>告警记录</h2>
+            <p>待实现...</p>
+        </div>
     </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- 界面导航脚本 -->
+
+    <!-- 外部 JavaScript 模块 -->
     <script src="js/navigation.js"></script>
-    <!-- 仪表盘脚本 -->
     <script src="js/system.js"></script>
-    <!-- 文件管理脚本 -->
     <script src="js/files.js"></script>
-    <!-- 音乐控制脚本 -->
     <script src="js/music.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/urlfilter.js"></script>
 </body>
 </html>

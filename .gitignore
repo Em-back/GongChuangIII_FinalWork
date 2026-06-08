@@ -41,3 +41,10 @@ htmlcov/
 # Temporary files
 tmp/
 temp/
+
+# Pyc
+*.pyc
+
+# Privacy
+config/ai_config.json
+data/chat_memory.json
