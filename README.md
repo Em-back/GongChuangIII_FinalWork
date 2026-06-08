@@ -1,4 +1,3 @@
-```markdown
 # openEuler 智能工具箱（Web 版）
 
 基于 FastAPI 的局域网可视化个人工作台，集成系统监控、AI 对话、文件管理、音乐控制、网址安全检测等功能，为 openEuler 主机提供便捷的浏览器管理界面。
@@ -127,7 +126,6 @@ smart_toolbox/
 - 默认所有文件操作限制在 `backend/static/files` 沙盒内，确保系统安全。
 - 首次使用 AI 助手前请务必配置 `config/ai_config.json`。
 - 若需后台长期运行，建议使用 `systemd` 或 `screen` 托管。
-```
 
 ## 许可证
 
