@@ -33,8 +33,8 @@
 
 ### 1. 获取代码
 ```bash
-git clone <your-repo-url>
-cd smart_toolbox
+git clone https://github.com/Em-back/GongChuangIII_FinalWork.git
+cd GongChuangIII_FinalWork
 ```
 
 ### 2. 安装依赖
@@ -43,7 +43,7 @@ pip install -r requirements.txt
 ```
 或手动安装：
 ```bash
-pip install fastapi uvicorn psutil openai apscheduler python-multipart aiofiles requests
+pip install fastapi uvicorn psutil websockets openai apscheduler aiofiles requests
 ```
 
 ### 3. 配置 AI 密钥
@@ -91,7 +91,7 @@ API 文档自动生成于 `http://<IP>:8000/docs`。
 ## 项目结构
 
 ```
-smart_toolbox/
+GongChuangIII_FinalWork/
 ├── main.py                  # 应用入口
 ├── config/
 │   ├── ai_config.json       # AI 密钥及参数（需自建）
@@ -113,7 +113,8 @@ smart_toolbox/
 │   └── static/              # 前端静态文件
 │       ├── index.html
 │       ├── js/              # JavaScript 模块
-│       └── music/           # 音乐文件存储
+│       ├── files/           # 文件存储
+│       └── music/           # 音乐存储
 └── requirements.txt
 ```
 

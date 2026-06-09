@@ -2,4 +2,7 @@ fastapi
 uvicorn[standard]
 psutil
 websockets
-python-multipart
+openai
+apscheduler
+aiofiles
+requests
